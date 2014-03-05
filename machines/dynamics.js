@@ -77,6 +77,7 @@ var $ = jQuery;
 		{'page_inner': 'views/page_inner.php'},
 		{'page_home': 'views/page_home.php'},
 		{'honoree': 'views/output_honoree.php'},
+		{'sponsorship': 'views/output_sponsorship.php'},
 		{'contact_form': 'views/output_contact_form.php'}
 	];
 
@@ -101,12 +102,64 @@ var $ = jQuery;
 
 			case "honorees":
 				returnPageData(pageID).done(function(data) {
+					$('section').html(php_page_inner);
+					$('section').find('.mainContent').html( _.unescape(data) );
+					appendPageTitle(pageID, $('section').find('.pageInfo'));
 
-					console.log(json_people_data);
+					_.each(json_people_data, function(value, key) {
+						returnHonoree = $(php_honoree);
+
+						_.each(value, function(val, k) {
+							switch(k) {
+								case "featuredImage":
+									returnHonoree.find('.' + k).find('img').attr('src', val);
+									break;
+								case "the_content":
+									returnHonoree.find('.' + k).html(_.unescape(val));
+									break;
+								case "category":
+									_.each(json_people_type_data, function(l, m) {
+										if (l.post_id == val) {
+											returnHonoree.find('.' + k).html(_.unescape(l.the_title));
+										}
+									});
+									break;
+								default:
+									returnHonoree.find('.' + k).html(val);
+									break;
+							}
+						});
+
+						$('section').find('.mainContent').append(returnHonoree);
+					});
 
 					changePage("in");
 				})
 
+				break;
+
+			case "sponsorship":
+				returnPageData(pageID).done(function(data){
+					$('section').html(php_page_inner);
+					$('section').find('.mainContent').html( _.unescape(data) );
+					appendPageTitle(pageID, $('section').find('.pageInfo'));
+
+					_.each(json_sponsorships_data, function(value, key) {
+						returnSponsorship = $(php_sponsorship);
+
+						_.each(value, function(val, k) {
+							switch(k) {
+								default:
+									returnSponsorship.find('.' + k).html(_.unescape(val));
+									break;
+							}
+						});
+
+						$('section').find('.mainContent').append(returnSponsorship);
+					});
+
+					changePage("in");
+				});
 				break;
 
 			default:

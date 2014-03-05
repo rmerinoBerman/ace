@@ -81,8 +81,8 @@
 	        	"input_name" => "company"
 	        )
 	    ),
-	    "people_sample_checkbox_multi_meta" => array(
-	    	"id" => "people_sample_checkbox_multi_meta",
+	    "people_category_meta" => array(
+	    	"id" => "people_category_meta",
 	        "name" => "Sample Checkbox Multi",
 	        "post_type" => "people",
 	        "position" => "side",
@@ -90,7 +90,7 @@
 	        "callback_args" => array(
 	        	"input_type" => "input_select",
 	        	"input_source" => "listPeople_type",
-	        	"input_name" => "sample_checkbox_multi"
+	        	"input_name" => "category"
 	        )
 	    ),
 	);
